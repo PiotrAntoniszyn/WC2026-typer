@@ -1,0 +1,20 @@
+[Unit]
+Description=WC2026 Typer - Flask app via Gunicorn
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/wc2026
+EnvironmentFile=/var/www/wc2026/.env
+ExecStart=/var/www/wc2026/.venv/bin/gunicorn \
+    --workers 2 \
+    --bind 127.0.0.1:8000 \
+    --access-logfile /var/log/wc2026/access.log \
+    --error-logfile /var/log/wc2026/error.log \
+    wsgi:app
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
