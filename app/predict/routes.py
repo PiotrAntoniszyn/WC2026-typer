@@ -1,0 +1,104 @@
+from datetime import datetime, timedelta, timezone
+
+from flask import abort, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required
+
+from app.models import AppSettings, Match, Prediction, Team, db
+from app.predict import predict_bp
+from app.predict.forms import ChampionForm, PredictionForm
+
+
+@predict_bp.route("/matches/<int:match_id>/predict", methods=["POST"])
+@login_required
+def save_prediction(match_id: int):
+    match = Match.query.get_or_404(match_id)
+
+    if match.is_locked:
+        flash("Predictions are locked for this match.", "warning")
+        return redirect(url_for("main.match_detail", match_id=match_id))
+
+    # Enforce lock window even if is_locked flag hasn't been set by scheduler yet
+    settings = db.session.get(AppSettings, 1)
+    lock_minutes = settings.lock_minutes_before if settings else 60
+    lock_cutoff = match.match_datetime.replace(tzinfo=timezone.utc) - timedelta(minutes=lock_minutes)
+    if datetime.now(timezone.utc) >= lock_cutoff:
+        match.is_locked = True
+        db.session.commit()
+        flash("The prediction window for this match has closed.", "warning")
+        return redirect(url_for("main.match_detail", match_id=match_id))
+
+    form = PredictionForm()
+    if not form.validate_on_submit():
+        for field_errors in form.errors.values():
+            for error in field_errors:
+                flash(error, "danger")
+        return redirect(url_for("main.match_detail", match_id=match_id))
+
+    existing = Prediction.query.filter_by(
+        user_id=current_user.id, match_id=match_id
+    ).first()
+
+    if existing:
+        existing.home_score = form.home_score.data
+        existing.away_score = form.away_score.data
+    else:
+        pred = Prediction(
+            user_id=current_user.id,
+            match_id=match_id,
+            home_score=form.home_score.data,
+            away_score=form.away_score.data,
+        )
+        db.session.add(pred)
+
+    db.session.commit()
+    flash("Prediction saved.", "success")
+    return redirect(url_for("main.matches"))
+
+
+@predict_bp.route("/champion", methods=["GET", "POST"])
+@login_required
+def champion():
+    first_match = Match.query.order_by(Match.match_datetime).first()
+    window_open = first_match is None or datetime.now(timezone.utc) < first_match.match_datetime.replace(tzinfo=timezone.utc)
+
+    teams = Team.query.filter(Team.country_code != "TBD").order_by(Team.name).all()
+    form = ChampionForm()
+    form.champion_team_id.choices = [(t.id, t.name) for t in teams]
+
+    existing = Prediction.query.filter_by(
+        user_id=current_user.id, match_id=None
+    ).first()
+
+    if form.validate_on_submit():
+        if not window_open:
+            flash("The champion prediction window is closed.", "warning")
+            return redirect(url_for("predict.champion"))
+
+        if existing:
+            existing.champion_team_id = form.champion_team_id.data
+        else:
+            pred = Prediction(
+                user_id=current_user.id,
+                match_id=None,
+                home_score=0,
+                away_score=0,
+                champion_team_id=form.champion_team_id.data,
+            )
+            db.session.add(pred)
+
+        db.session.commit()
+        flash("Champion pick saved.", "success")
+        return redirect(url_for("predict.champion"))
+
+    # Pre-fill form with existing pick
+    if existing and existing.champion_team_id:
+        form.champion_team_id.data = existing.champion_team_id
+
+    return render_template(
+        "predict/champion.html",
+        form=form,
+        window_open=window_open,
+        existing=existing,
+        teams=teams,
+        first_match=first_match,
+    )

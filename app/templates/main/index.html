@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Home — WC2026 Typer{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-7">
+    <h4 class="fw-bold mb-3">Upcoming Matches</h4>
+    {% if upcoming %}
+      <div class="row g-3">
+        {% for match in upcoming %}
+          <div class="col-12">
+            <a href="{{ url_for('main.match_detail', match_id=match.id) }}"
+               class="text-decoration-none">
+              <div class="card shadow-sm h-100">
+                <div class="card-body py-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge bg-secondary">{{ match.phase.label }}{% if match.group_letter %} — Group {{ match.group_letter }}{% endif %}</span>
+                    <small class="text-muted">{{ match.match_datetime.strftime("%d %b %Y %H:%M") }} UTC</small>
+                  </div>
+                  <div class="d-flex align-items-center my-2" style="gap:0">
+                    <div class="text-center" style="width:44%;display:flex;flex-direction:column;align-items:center;">
+                      <div style="height:36px;display:flex;align-items:center;justify-content:center;">
+                        {{ match.home_team | flag_img("lg") }}
+                      </div>
+                      <div class="fw-semibold mt-1 text-dark small">{{ match.home_team.name }}</div>
+                    </div>
+                    <div class="text-center" style="width:12%;display:flex;align-items:center;justify-content:center;padding-top:0">
+                      <span class="text-muted fw-bold fs-5">vs</span>
+                    </div>
+                    <div class="text-center" style="width:44%;display:flex;flex-direction:column;align-items:center;">
+                      <div style="height:36px;display:flex;align-items:center;justify-content:center;">
+                        {{ match.away_team | flag_img("lg") }}
+                      </div>
+                      <div class="fw-semibold mt-1 text-dark small">{{ match.away_team.name }}</div>
+                    </div>
+                  </div>
+                  <div class="text-center mt-2">
+                    <small class="text-success fw-semibold">
+                      &#9203;
+                      <span class="countdown"
+                            data-kickoff="{{ match.match_datetime.isoformat() }}Z">...</span>
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted">No upcoming matches.</p>
+    {% endif %}
+  </div>
+
+  <div class="col-lg-5">
+    <h4 class="fw-bold mb-3">Top 5</h4>
+    {% if top_users %}
+      <table class="table table-sm table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th class="text-end">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in top_users %}
+            <tr {% if current_user.is_authenticated and user.id == current_user.id %}class="table-success fw-bold"{% endif %}>
+              <td>{{ loop.index }}</td>
+              <td>{{ user.username }}</td>
+              <td class="text-end">{{ user.total_points }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{{ url_for('main.leaderboard') }}" class="btn btn-sm btn-outline-secondary">
+        Full leaderboard &rarr;
+      </a>
+    {% else %}
+      <p class="text-muted">No scores yet.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function updateCountdowns() {
+  document.querySelectorAll('.countdown').forEach(el => {
+    const diff = new Date(el.dataset.kickoff) - Date.now();
+    if (diff <= 0) { el.textContent = 'Kickoff!'; return; }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    el.textContent = d > 0 ? `${d}d ${h}h ${m}m` : `${h}h ${m}m ${s}s`;
+  });
+}
+updateCountdowns();
+setInterval(updateCountdowns, 1000);
+</script>
+{% endblock %}

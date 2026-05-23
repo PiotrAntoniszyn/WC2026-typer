@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}{{ match.home_team.name }} vs {{ match.away_team.name }} — WC2026 Typer{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+  <a href="{{ url_for('main.matches') }}" class="text-decoration-none">&larr; All Matches</a>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-body text-center py-4">
+    <p class="text-muted mb-1">
+      {{ match.phase.label }}{% if match.group_letter %} — Group {{ match.group_letter }}{% endif %}
+      &bull; {{ match.match_datetime.strftime("%d %B %Y %H:%M") }} UTC
+      {% if match.venue %}&bull; {{ match.venue }}{% endif %}
+    </p>
+    <div class="d-flex justify-content-center align-items-center gap-4 my-3">
+      <div class="text-center">
+        {{ match.home_team | flag_img("lg") }}
+        <span class="fw-bold fs-5 d-block mt-1">{{ match.home_team.name }}</span>
+      </div>
+      {% if match.has_result %}
+        <span class="display-5 fw-bold">{{ match.home_score }} – {{ match.away_score }}</span>
+      {% else %}
+        <span class="display-5 text-muted">vs</span>
+      {% endif %}
+      <div class="text-center">
+        {{ match.away_team | flag_img("lg") }}
+        <span class="fw-bold fs-5 d-block mt-1">{{ match.away_team.name }}</span>
+      </div>
+    </div>
+    {% if match.is_locked %}
+      <span class="badge bg-secondary">Locked</span>
+    {% endif %}
+  </div>
+</div>
+
+{% if not match.is_locked %}
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Your Prediction</h5>
+      <form method="POST" action="{{ url_for('predict.save_prediction', match_id=match.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="row g-2 align-items-end">
+          <div class="col-auto">
+            <label class="form-label">{{ match.home_team.name }}</label>
+            <input type="number" name="home_score" class="form-control" min="0" max="99"
+                   value="{{ user_prediction.home_score if user_prediction else '' }}" required>
+          </div>
+          <div class="col-auto align-self-end pb-1">
+            <span class="fs-4">–</span>
+          </div>
+          <div class="col-auto">
+            <label class="form-label">{{ match.away_team.name }}</label>
+            <input type="number" name="away_score" class="form-control" min="0" max="99"
+                   value="{{ user_prediction.away_score if user_prediction else '' }}" required>
+          </div>
+          <div class="col-auto align-self-end">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% elif user_prediction %}
+  <div class="alert alert-info">
+    Your prediction: <strong>{{ user_prediction.home_score }} – {{ user_prediction.away_score }}</strong>
+    {% if user_prediction.points_awarded is not none %}
+      &mdash; <strong>{{ user_prediction.points_awarded }} pts</strong>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% if match.is_locked and all_predictions %}
+  <h5 class="mb-3">All Predictions</h5>
+  <table class="table table-sm table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Player</th>
+        <th class="text-center">Prediction</th>
+        <th class="text-end">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pred in all_predictions %}
+        <tr {% if pred.user_id == current_user.id %}class="table-success fw-bold"{% endif %}>
+          <td>{{ pred.user.username }}</td>
+          <td class="text-center">{{ pred.home_score }} – {{ pred.away_score }}</td>
+          <td class="text-end">
+            {% if pred.points_awarded is not none %}{{ pred.points_awarded }}{% else %}—{% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard — WC2026 Typer{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-4">Leaderboard</h2>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th class="text-end">Pts</th>
+        <th class="text-center" title="Exact score — Group Stage">Exact G</th>
+        <th class="text-center" title="Correct outcome (no exact score) — Group Stage">Outcome G</th>
+        <th class="text-center" title="Exact score — Knockout Stage">Exact KO</th>
+        <th class="text-center" title="Correct outcome (no exact score) — Knockout Stage">Outcome KO</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        {% set s = stats[user.id] %}
+        <tr {% if user.id == current_user.id %}class="table-success fw-bold"{% endif %}>
+          <td>{{ loop.index }}</td>
+          <td>
+            {{ user.username }}
+            {% if user.is_admin %}<span class="badge bg-warning text-dark ms-1 small">admin</span>{% endif %}
+          </td>
+          <td class="text-end">{{ user.total_points }}</td>
+          <td class="text-center">{{ s.exact_group }}</td>
+          <td class="text-center">{{ s.outcome_group }}</td>
+          <td class="text-center">{{ s.exact_ko }}</td>
+          <td class="text-center">{{ s.outcome_ko }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="7" class="text-muted text-center">No players yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<p class="text-muted small mt-2">
+  <strong>Exact</strong> — correct scoreline &bull;
+  <strong>Outcome</strong> — correct result (W/D/L) without exact score &bull;
+  <strong>G</strong> = Group Stage &bull; <strong>KO</strong> = Knockout Stage
+</p>
+{% endblock %}

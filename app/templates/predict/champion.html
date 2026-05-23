@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Champion Pick — WC2026 Typer{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-2">Champion Pick</h2>
+<p class="text-muted mb-4">Worth <strong>20 points</strong> if correct. Window closes when the tournament starts.</p>
+
+{% if window_open %}
+  <div class="card shadow-sm" style="max-width: 420px;">
+    <div class="card-body">
+      <form method="POST" action="{{ url_for('predict.champion') }}">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.champion_team_id.label(class="form-label fw-semibold") }}
+          {{ form.champion_team_id(class="form-select") }}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+      </form>
+    </div>
+  </div>
+  {% if existing and existing.champion_team %}
+    <p class="mt-3 text-muted small">
+      Current pick: <strong>{{ existing.champion_team.name }}</strong>
+    </p>
+  {% endif %}
+{% else %}
+  <div class="alert alert-warning">
+    The champion prediction window is closed.
+  </div>
+  {% if existing and existing.champion_team %}
+    <p>Your pick: <strong>{{ existing.champion_team.name }}</strong>
+      {% if existing.points_awarded is not none %}
+        &mdash; <strong>{{ existing.points_awarded }} pts</strong>
+      {% endif %}
+    </p>
+  {% else %}
+    <p class="text-muted">You did not make a champion pick.</p>
+  {% endif %}
+{% endif %}
+
+{% if first_match and window_open %}
+  <p class="mt-3 text-muted small">
+    Window closes: {{ first_match.match_datetime.strftime("%d %B %Y %H:%M") }} UTC
+  </p>
+{% endif %}
+{% endblock %}

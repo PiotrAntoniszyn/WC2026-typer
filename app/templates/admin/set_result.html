@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Set Result — WC2026 Typer{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+  <a href="{{ url_for('admin.dashboard') }}" class="text-decoration-none">&larr; Dashboard</a>
+</div>
+
+<h4 class="fw-bold mb-4">
+  Set Result: {{ match.home_team.name }} vs {{ match.away_team.name }}
+</h4>
+<p class="text-muted">{{ match.match_datetime.strftime("%d %B %Y %H:%M") }} UTC — {{ match.phase.label }}</p>
+
+<div class="card shadow-sm" style="max-width: 360px;">
+  <div class="card-body">
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <div class="row g-2 align-items-end mb-3">
+        <div class="col">
+          {{ form.home_score.label(class="form-label") }}
+          {{ form.home_score(class="form-control" + (" is-invalid" if form.home_score.errors else ""),
+             placeholder="0") }}
+          {% for e in form.home_score.errors %}
+            <div class="invalid-feedback">{{ e }}</div>
+          {% endfor %}
+        </div>
+        <div class="col-auto align-self-end pb-2"><span>–</span></div>
+        <div class="col">
+          {{ form.away_score.label(class="form-label") }}
+          {{ form.away_score(class="form-control" + (" is-invalid" if form.away_score.errors else ""),
+             placeholder="0") }}
+          {% for e in form.away_score.errors %}
+            <div class="invalid-feedback">{{ e }}</div>
+          {% endfor %}
+        </div>
+      </div>
+      {{ form.submit(class="btn btn-warning w-100") }}
+    </form>
+  </div>
+</div>
+{% endblock %}
