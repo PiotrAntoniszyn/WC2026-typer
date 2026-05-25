@@ -58,6 +58,39 @@ def get_client() -> FootballDataClient:
     return FootballDataClient(cfg.football_data_api_key)
 
 
+def clear_manual_results(app) -> int:
+    """
+    Reset results that were manually entered (result_source == MANUAL) for matches
+    that have an external_id and can therefore be re-fetched from the API.
+    Nulls out prediction points then fully rebuilds all user totals so the state
+    stays consistent regardless of any prior inconsistencies.
+    Leaves is_locked intact — the match already happened.
+    Returns count of matches cleared.
+    """
+    from app.models import Match, ResultSourceEnum, db
+    from app.scoring import recalculate_all_totals
+
+    with app.app_context():
+        manual_matches = Match.query.filter(
+            Match.result_source == ResultSourceEnum.MANUAL,
+            Match.external_id.isnot(None),
+        ).all()
+
+        for match in manual_matches:
+            for prediction in match.predictions:
+                prediction.points_awarded = None
+            match.home_score = None
+            match.away_score = None
+            match.result_source = None
+
+        if manual_matches:
+            recalculate_all_totals()
+            logger.info("Cleared %d manual result(s) before API sync", len(manual_matches))
+
+        db.session.commit()
+        return len(manual_matches)
+
+
 def sync_results(app) -> int:
     """
     Pull all matches from API, update DB:

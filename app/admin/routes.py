@@ -4,7 +4,7 @@ from flask import abort, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, SubmitField
-from wtforms.validators import DataRequired, Length, NumberRange
+from wtforms.validators import DataRequired, InputRequired, Length, NumberRange
 
 from app.admin import admin_bp
 from app.models import AppSettings, Match, Prediction, ResultSourceEnum, User, db
@@ -22,8 +22,8 @@ def admin_required(f):
 
 
 class ResultForm(FlaskForm):
-    home_score = IntegerField("Home Score", validators=[DataRequired(), NumberRange(min=0, max=99)])
-    away_score = IntegerField("Away Score", validators=[DataRequired(), NumberRange(min=0, max=99)])
+    home_score = IntegerField("Home Score", validators=[InputRequired(), NumberRange(min=0, max=99)])
+    away_score = IntegerField("Away Score", validators=[InputRequired(), NumberRange(min=0, max=99)])
     submit = SubmitField("Save Result")
 
 
@@ -137,8 +137,15 @@ def recalculate():
 def api_sync():
     from flask import current_app
 
-    from app.api.client import sync_results
+    from app.api.client import clear_manual_results, sync_results
 
-    count = sync_results(current_app._get_current_object())
-    flash(f"API sync complete. Updated {count} match(es).", "success")
+    app = current_app._get_current_object()
+    cleared = clear_manual_results(app)
+    synced = sync_results(app)
+
+    parts = []
+    if cleared:
+        parts.append(f"Cleared {cleared} manual result(s).")
+    parts.append(f"API sync complete. Updated {synced} match(es).")
+    flash(" ".join(parts), "success")
     return redirect(url_for("admin.dashboard"))
