@@ -31,7 +31,6 @@ def index():
 
 
 @main_bp.route("/matches")
-@login_required
 def matches():
     all_matches = (
         Match.query
@@ -100,7 +99,6 @@ def match_detail(match_id: int):
 
 
 @main_bp.route("/leaderboard")
-@login_required
 def leaderboard():
     users = User.query.order_by(User.total_points.desc()).all()
 

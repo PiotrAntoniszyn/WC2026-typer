@@ -56,7 +56,6 @@ def save_prediction(match_id: int):
 
 
 @predict_bp.route("/champion", methods=["GET", "POST"])
-@login_required
 def champion():
     first_match = Match.query.order_by(Match.match_datetime).first()
     window_open = first_match is None or datetime.now(timezone.utc) < first_match.match_datetime.replace(tzinfo=timezone.utc)
@@ -65,11 +64,17 @@ def champion():
     form = ChampionForm()
     form.champion_team_id.choices = [(t.id, t.name) for t in teams]
 
-    existing = Prediction.query.filter_by(
-        user_id=current_user.id, match_id=None
-    ).first()
+    existing = None
+    if current_user.is_authenticated:
+        existing = Prediction.query.filter_by(
+            user_id=current_user.id, match_id=None
+        ).first()
 
     if form.validate_on_submit():
+        if not current_user.is_authenticated:
+            flash("Log in to make a champion pick.", "warning")
+            return redirect(url_for("auth.login"))
+
         if not window_open:
             flash("The champion prediction window is closed.", "warning")
             return redirect(url_for("predict.champion"))

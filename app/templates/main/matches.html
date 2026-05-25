@@ -51,23 +51,31 @@
           </div>
         </div>
         {% if not match.is_locked %}
-          <form method="POST"
-                action="{{ url_for('predict.save_prediction', match_id=match.id) }}"
-                class="mt-2 d-flex align-items-center gap-2 flex-wrap">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <input type="number" name="home_score" class="form-control form-control-sm"
-                   style="width:70px" min="0" max="99"
-                   value="{{ pred.home_score if pred else '' }}"
-                   placeholder="0" required>
-            <span class="text-muted">–</span>
-            <input type="number" name="away_score" class="form-control form-control-sm"
-                   style="width:70px" min="0" max="99"
-                   value="{{ pred.away_score if pred else '' }}"
-                   placeholder="0" required>
-            <button type="submit" class="btn btn-sm {{ 'btn-primary' if pred else 'btn-success' }}">
-              {{ "Update" if pred else "Save" }}
-            </button>
-          </form>
+          {% if current_user.is_authenticated %}
+            <form method="POST"
+                  action="{{ url_for('predict.save_prediction', match_id=match.id) }}"
+                  class="mt-2 d-flex align-items-center gap-2 flex-wrap">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="number" name="home_score" class="form-control form-control-sm"
+                     style="width:70px" min="0" max="99"
+                     value="{{ pred.home_score if pred else '' }}"
+                     placeholder="0" required>
+              <span class="text-muted">–</span>
+              <input type="number" name="away_score" class="form-control form-control-sm"
+                     style="width:70px" min="0" max="99"
+                     value="{{ pred.away_score if pred else '' }}"
+                     placeholder="0" required>
+              <button type="submit" class="btn btn-sm {{ 'btn-primary' if pred else 'btn-success' }}">
+                {{ "Update" if pred else "Save" }}
+              </button>
+            </form>
+          {% else %}
+            <div class="mt-2">
+              <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline-secondary">
+                Log in to make a prediction
+              </a>
+            </div>
+          {% endif %}
         {% elif pred %}
           <div class="mt-1 small text-muted">
             Your pick: <strong>{{ pred.home_score }} – {{ pred.away_score }}</strong>
@@ -150,23 +158,31 @@
 
                     {# Prediction row #}
                     {% if not match.is_locked %}
-                      <form method="POST"
-                            action="{{ url_for('predict.save_prediction', match_id=match.id) }}"
-                            class="mt-2 d-flex align-items-center gap-2 flex-wrap">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <input type="number" name="home_score" class="form-control form-control-sm"
-                               style="width:70px" min="0" max="99"
-                               value="{{ pred.home_score if pred else '' }}"
-                               placeholder="0" required>
-                        <span class="text-muted">–</span>
-                        <input type="number" name="away_score" class="form-control form-control-sm"
-                               style="width:70px" min="0" max="99"
-                               value="{{ pred.away_score if pred else '' }}"
-                               placeholder="0" required>
-                        <button type="submit" class="btn btn-sm {{ 'btn-primary' if pred else 'btn-success' }}">
-                          {{ "Update" if pred else "Save" }}
-                        </button>
-                      </form>
+                      {% if current_user.is_authenticated %}
+                        <form method="POST"
+                              action="{{ url_for('predict.save_prediction', match_id=match.id) }}"
+                              class="mt-2 d-flex align-items-center gap-2 flex-wrap">
+                          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                          <input type="number" name="home_score" class="form-control form-control-sm"
+                                 style="width:70px" min="0" max="99"
+                                 value="{{ pred.home_score if pred else '' }}"
+                                 placeholder="0" required>
+                          <span class="text-muted">–</span>
+                          <input type="number" name="away_score" class="form-control form-control-sm"
+                                 style="width:70px" min="0" max="99"
+                                 value="{{ pred.away_score if pred else '' }}"
+                                 placeholder="0" required>
+                          <button type="submit" class="btn btn-sm {{ 'btn-primary' if pred else 'btn-success' }}">
+                            {{ "Update" if pred else "Save" }}
+                          </button>
+                        </form>
+                      {% else %}
+                        <div class="mt-2">
+                          <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline-secondary">
+                            Log in to make a prediction
+                          </a>
+                        </div>
+                      {% endif %}
                     {% elif pred %}
                       <div class="mt-1 small text-muted">
                         Your pick: <strong>{{ pred.home_score }} – {{ pred.away_score }}</strong>
