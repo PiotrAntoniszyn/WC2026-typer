@@ -1,42 +1,42 @@
 {% extends "base.html" %}
 
-{% block title %}Rules — WC2026 Typer{% endblock %}
+{% block title %}{{ _('Rules') }} — WC2026 Typer{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">How to Play</h2>
+<h2 class="mb-4">{{ _('How to Play') }}</h2>
 
 <div class="row g-4">
 
   <div class="col-md-6">
     <div class="card h-100">
-      <div class="card-header fw-semibold">Scoring</div>
+      <div class="card-header fw-semibold">{{ _('Scoring') }}</div>
       <div class="card-body p-0">
         <table class="table table-hover mb-0">
           <thead class="table-light">
             <tr>
-              <th>Prediction</th>
-              <th class="text-end">Points</th>
+              <th>{{ _('Prediction') }}</th>
+              <th class="text-end">{{ _('Points') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Group stage — exact score</td>
+              <td>{{ _('Group stage — exact score') }}</td>
               <td class="text-end fw-bold">3</td>
             </tr>
             <tr>
-              <td>Group stage — correct outcome (W/D/L)</td>
+              <td>{{ _('Group stage — correct outcome (W/D/L)') }}</td>
               <td class="text-end fw-bold">1</td>
             </tr>
             <tr>
-              <td>Knockout stage — exact score</td>
+              <td>{{ _('Knockout stage — exact score') }}</td>
               <td class="text-end fw-bold">5</td>
             </tr>
             <tr>
-              <td>Knockout stage — correct outcome</td>
+              <td>{{ _('Knockout stage — correct outcome') }}</td>
               <td class="text-end fw-bold">2</td>
             </tr>
             <tr class="table-success">
-              <td>Tournament champion pick</td>
+              <td>{{ _('Tournament champion pick') }}</td>
               <td class="text-end fw-bold">20</td>
             </tr>
           </tbody>
@@ -47,22 +47,22 @@
 
   <div class="col-md-6">
     <div class="card h-100">
-      <div class="card-header fw-semibold">How It Works</div>
+      <div class="card-header fw-semibold">{{ _('How It Works') }}</div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
-          <strong>Prediction window</strong> — Submit or update your score prediction for any match up until it locks.
+          <strong>{{ _('Prediction window') }}</strong> — {{ _('Submit or update your score prediction for any match up until it locks.') }}
         </li>
         <li class="list-group-item">
-          <strong>Lock time</strong> — Predictions close automatically 30 minutes before kick-off. After that, no changes are possible.
+          <strong>{{ _('Lock time') }}</strong> — {{ _('Predictions close automatically 30 minutes before kick-off. After that, no changes are possible.') }}
         </li>
         <li class="list-group-item">
-          <strong>Knockout scoring</strong> — Points are awarded for the 90-minute result. Extra time and penalties do not change the outcome used for scoring.
+          <strong>{{ _('Knockout scoring') }}</strong> — {{ _('Points are awarded for the 90-minute result. Extra time and penalties do not change the outcome used for scoring.') }}
         </li>
         <li class="list-group-item">
-          <strong>Champion pick</strong> — Pick your tournament winner before the window closes. Correct pick earns a 20-point bonus on top of all match points.
+          <strong>{{ _('Champion pick') }}</strong> — {{ _('Pick your tournament winner before the window closes. Correct pick earns a 20-point bonus on top of all match points.') }}
         </li>
         <li class="list-group-item">
-          <strong>Result corrections</strong> — If an official result is corrected, your points are recalculated automatically.
+          <strong>{{ _('Result corrections') }}</strong> — {{ _('If an official result is corrected, your points are recalculated automatically.') }}
         </li>
       </ul>
     </div>

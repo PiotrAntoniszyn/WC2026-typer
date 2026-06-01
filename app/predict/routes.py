@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
 from flask import abort, flash, redirect, render_template, request, url_for
+from flask_babel import _
 from flask_login import current_user, login_required
 
 from app.models import AppSettings, Match, Prediction, Team, db
@@ -14,7 +15,7 @@ def save_prediction(match_id: int):
     match = Match.query.get_or_404(match_id)
 
     if match.is_locked:
-        flash("Predictions are locked for this match.", "warning")
+        flash(_("Predictions are locked for this match."), "warning")
         return redirect(url_for("main.match_detail", match_id=match_id))
 
     # Enforce lock window even if is_locked flag hasn't been set by scheduler yet
@@ -24,7 +25,7 @@ def save_prediction(match_id: int):
     if datetime.now(timezone.utc) >= lock_cutoff:
         match.is_locked = True
         db.session.commit()
-        flash("The prediction window for this match has closed.", "warning")
+        flash(_("The prediction window for this match has closed."), "warning")
         return redirect(url_for("main.match_detail", match_id=match_id))
 
     form = PredictionForm()
@@ -51,7 +52,7 @@ def save_prediction(match_id: int):
         db.session.add(pred)
 
     db.session.commit()
-    flash("Prediction saved.", "success")
+    flash(_("Prediction saved."), "success")
     return redirect(url_for("main.matches"))
 
 
@@ -72,11 +73,11 @@ def champion():
 
     if form.validate_on_submit():
         if not current_user.is_authenticated:
-            flash("Log in to make a champion pick.", "warning")
+            flash(_("Log in to make a champion pick."), "warning")
             return redirect(url_for("auth.login"))
 
         if not window_open:
-            flash("The champion prediction window is closed.", "warning")
+            flash(_("The champion prediction window is closed."), "warning")
             return redirect(url_for("predict.champion"))
 
         if existing:
@@ -92,7 +93,7 @@ def champion():
             db.session.add(pred)
 
         db.session.commit()
-        flash("Champion pick saved.", "success")
+        flash(_("Champion pick saved."), "success")
         return redirect(url_for("predict.champion"))
 
     # Pre-fill form with existing pick

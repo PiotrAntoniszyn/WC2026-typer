@@ -1,5 +1,6 @@
 import bcrypt
 from flask import flash, redirect, render_template, request, url_for
+from flask_babel import _
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app.auth import auth_bp
@@ -18,15 +19,15 @@ def register():
         expected_code = settings.invite_code if settings else "wc2026"
 
         if form.invite_code.data.strip() != expected_code:
-            flash("Invalid invite code.", "danger")
+            flash(_("Invalid invite code."), "danger")
             return render_template("auth/register.html", form=form)
 
         if User.query.filter_by(email=form.email.data.lower()).first():
-            flash("An account with this email already exists.", "danger")
+            flash(_("An account with this email already exists."), "danger")
             return render_template("auth/register.html", form=form)
 
         if User.query.filter_by(username=form.username.data).first():
-            flash("Username already taken.", "danger")
+            flash(_("Username already taken."), "danger")
             return render_template("auth/register.html", form=form)
 
         password_hash = bcrypt.hashpw(
@@ -45,7 +46,7 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        flash("Account created successfully. Please log in.", "success")
+        flash(_("Account created successfully. Please log in."), "success")
         return redirect(url_for("auth.login"))
 
     return render_template("auth/register.html", form=form)
@@ -63,7 +64,7 @@ def login():
         if user is None or not bcrypt.checkpw(
             form.password.data.encode(), user.password_hash.encode()
         ):
-            flash("Invalid email or password.", "danger")
+            flash(_("Invalid email or password."), "danger")
             return render_template("auth/login.html", form=form)
 
         login_user(user, remember=form.remember_me.data)
@@ -77,5 +78,5 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash("You have been logged out.", "info")
+    flash(_("You have been logged out."), "info")
     return redirect(url_for("main.index"))

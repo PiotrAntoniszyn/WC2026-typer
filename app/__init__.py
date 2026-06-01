@@ -1,6 +1,7 @@
 import logging
 
-from flask import Flask
+from flask import Flask, redirect, request, session, url_for
+from flask_babel import Babel
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
@@ -13,6 +14,14 @@ logger = logging.getLogger(__name__)
 login_manager = LoginManager()
 migrate = Migrate()
 csrf = CSRFProtect()
+babel = Babel()
+
+
+def get_locale() -> str:
+    from flask import has_request_context
+    if has_request_context():
+        return session.get("lang", "en")
+    return "en"
 
 
 def create_app(config=None) -> Flask:
@@ -44,13 +53,21 @@ def create_app(config=None) -> Flask:
     app.config["WTF_CSRF_ENABLED"] = not cfg.testing
     app.config["LOCK_MINUTES_BEFORE"] = cfg.lock_minutes_before
 
+    app.config["BABEL_DEFAULT_LOCALE"] = cfg.babel_default_locale
+    app.config["BABEL_SUPPORTED_LOCALES"] = cfg.babel_supported_locales
+
+    from werkzeug.middleware.proxy_fix import ProxyFix
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1, x_proto=1, x_prefix=1)
+
     db.init_app(app)
     migrate.init_app(app, db)
     csrf.init_app(app)
+    babel.init_app(app, locale_selector=get_locale)
 
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
-    login_manager.login_message = "Please log in to access this page."
+    from flask_babel import lazy_gettext as _l
+    login_manager.login_message = _l("Please log in to access this page.")
     login_manager.login_message_category = "warning"
 
     @login_manager.user_loader

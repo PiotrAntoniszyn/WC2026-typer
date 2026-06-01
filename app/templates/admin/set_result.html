@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Set Result — WC2026 Typer{% endblock %}
+{% block title %}{{ _('Set Result') }} — WC2026 Typer{% endblock %}
 
 {% block content %}
 <div class="mb-3">
-  <a href="{{ url_for('admin.dashboard') }}" class="text-decoration-none">&larr; Dashboard</a>
+  <a href="{{ url_for('admin.dashboard') }}" class="text-decoration-none">&larr; {{ _('Dashboard') }}</a>
 </div>
 
 <h4 class="fw-bold mb-4">
-  Set Result: {{ match.home_team.name }} vs {{ match.away_team.name }}
+  {{ _('Set Result:') }} {{ match.home_team.name }} vs {{ match.away_team.name }}
 </h4>
 <p class="text-muted">{{ match.match_datetime.strftime("%d %B %Y %H:%M") }} UTC — {{ match.phase.label }}</p>
 
