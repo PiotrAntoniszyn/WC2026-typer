@@ -1,20 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Admin Users — WC2026 Typer{% endblock %}
+{% block title %}{{ _('Admin Users') }} — WC2026 Typer{% endblock %}
 
 {% block content %}
 <div class="mb-3">
-  <a href="{{ url_for('admin.dashboard') }}" class="text-decoration-none">&larr; Dashboard</a>
+  <a href="{{ url_for('admin.dashboard') }}" class="text-decoration-none">&larr; {{ _('Dashboard') }}</a>
 </div>
 
-<h4 class="fw-bold mb-4">Users ({{ users|length }})</h4>
+<h4 class="fw-bold mb-4">{{ _('Users') }} ({{ users|length }})</h4>
 
 <table class="table table-hover">
   <thead class="table-dark">
     <tr>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Points</th>
-      <th>Role</th>
+      <th>{{ _('Username') }}</th>
+      <th>{{ _('Email') }}</th>
+      <th>{{ _('Points') }}</th>
+      <th>{{ _('Role') }}</th>
       <th></th>
     </tr>
   </thead>
@@ -26,9 +26,9 @@
         <td>{{ user.total_points }}</td>
         <td>
           {% if user.is_admin %}
-            <span class="badge bg-warning text-dark">Admin</span>
+            <span class="badge bg-warning text-dark">{{ _('Admin') }}</span>
           {% else %}
-            <span class="badge bg-secondary">Player</span>
+            <span class="badge bg-secondary">{{ _('Player') }}</span>
           {% endif %}
         </td>
         <td>
@@ -38,7 +38,7 @@
                   class="d-inline">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <button type="submit" class="btn btn-sm btn-outline-secondary">
-                {% if user.is_admin %}Demote{% else %}Promote{% endif %}
+                {% if user.is_admin %}{{ _('Demote') }}{% else %}{{ _('Promote') }}{% endif %}
               </button>
             </form>
           {% endif %}

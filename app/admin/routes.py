@@ -1,6 +1,7 @@
 from functools import wraps
 
 from flask import abort, flash, redirect, render_template, request, url_for
+from flask_babel import _
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, SubmitField
@@ -65,7 +66,7 @@ def set_result(match_id: int):
         )
         score_match(match)
         db.session.commit()
-        flash(f"Result saved: {match.home_score}–{match.away_score}", "success")
+        flash(_("Result saved: %(home)s–%(away)s", home=match.home_score, away=match.away_score), "success")
         return redirect(url_for("admin.dashboard"))
 
     return render_template("admin/set_result.html", match=match, form=form)
@@ -82,7 +83,7 @@ def settings():
         app_settings.invite_code = form.invite_code.data
         app_settings.lock_minutes_before = form.lock_minutes_before.data
         db.session.commit()
-        flash("Settings updated.", "success")
+        flash(_("Settings updated."), "success")
         return redirect(url_for("admin.settings"))
 
     return render_template("admin/settings.html", form=form)
@@ -102,12 +103,14 @@ def users():
 def toggle_admin(user_id: int):
     user = User.query.get_or_404(user_id)
     if user.id == current_user.id:
-        flash("You cannot change your own admin status.", "warning")
+        flash(_("You cannot change your own admin status."), "warning")
     else:
         user.is_admin = not user.is_admin
         db.session.commit()
-        status = "promoted to admin" if user.is_admin else "demoted"
-        flash(f"{user.username} {status}.", "success")
+        if user.is_admin:
+            flash(_("%(name)s promoted to admin.", name=user.username), "success")
+        else:
+            flash(_("%(name)s demoted.", name=user.username), "success")
     return redirect(url_for("admin.users"))
 
 
@@ -121,13 +124,13 @@ def recalculate():
         if match.has_result:
             count = score_match(match)
             db.session.commit()
-            flash(f"Recalculated {count} predictions for match {match_id}.", "success")
+            flash(_("Recalculated %(count)s predictions for match %(id)s.", count=count, id=match_id), "success")
         else:
-            flash("Match has no result yet.", "warning")
+            flash(_("Match has no result yet."), "warning")
     else:
         recalculate_all_totals()
         db.session.commit()
-        flash("All totals recalculated.", "success")
+        flash(_("All totals recalculated."), "success")
     return redirect(url_for("admin.dashboard"))
 
 
@@ -145,7 +148,7 @@ def api_sync():
 
     parts = []
     if cleared:
-        parts.append(f"Cleared {cleared} manual result(s).")
-    parts.append(f"API sync complete. Updated {synced} match(es).")
+        parts.append(str(_("Cleared %(n)s manual result(s).", n=cleared)))
+    parts.append(str(_("API sync complete. Updated %(n)s match(es).", n=synced)))
     flash(" ".join(parts), "success")
     return redirect(url_for("admin.dashboard"))

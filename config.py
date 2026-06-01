@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     lock_minutes_before: int = Field(default=60)
     admin_email: str = Field(default="")
 
+    # Internationalisation
+    babel_default_locale: str = "en"
+    babel_supported_locales: list[str] = ["en", "pl"]
+
     # External API
     football_data_api_key: str = Field(default="")
     football_data_base_url: str = "https://api.football-data.org/v4"

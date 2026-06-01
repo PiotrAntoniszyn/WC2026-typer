@@ -1,0 +1,722 @@
+# Polish translations for WC2026 Typer.
+# Copyright (C) 2026 Piotr Antoniszyn
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: WC2026 Typer\n"
+"Report-Msgid-Bugs-To: pparker884@gmail.com\n"
+"POT-Creation-Date: 2026-06-01 19:43+0200\n"
+"PO-Revision-Date: 2026-06-01 19:43+0200\n"
+"Last-Translator: Piotr Antoniszyn <pparker884@gmail.com>\n"
+"Language: pl\n"
+"Language-Team: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app/__init__.py:64
+msgid "Please log in to access this page."
+msgstr "Zaloguj się, aby uzyskać dostęp do tej strony."
+
+#: app/models.py:45 app/templates/main/leaderboard.html:104
+msgid "Group Stage"
+msgstr "Faza grupowa"
+
+#: app/models.py:46
+msgid "Round of 32"
+msgstr "Runda 1/32"
+
+#: app/models.py:47
+msgid "Round of 16"
+msgstr "Runda 1/16"
+
+#: app/models.py:48
+msgid "Quarter-finals"
+msgstr "Ćwierćfinały"
+
+#: app/models.py:49
+msgid "Semi-finals"
+msgstr "Półfinały"
+
+#: app/models.py:50
+msgid "3rd Place"
+msgstr "3. miejsce"
+
+#: app/models.py:51
+msgid "Final"
+msgstr "Finał"
+
+#: app/admin/routes.py:69
+#, python-format
+msgid "Result saved: %(home)s–%(away)s"
+msgstr "Wynik zapisany: %(home)s–%(away)s"
+
+#: app/admin/routes.py:86
+msgid "Settings updated."
+msgstr "Ustawienia zaktualizowane."
+
+#: app/admin/routes.py:106
+msgid "You cannot change your own admin status."
+msgstr "Nie możesz zmienić własnego statusu administratora."
+
+#: app/admin/routes.py:111
+#, python-format
+msgid "%(name)s promoted to admin."
+msgstr "%(name)s awansowany na administratora."
+
+#: app/admin/routes.py:113
+#, python-format
+msgid "%(name)s demoted."
+msgstr "%(name)s zdegradowany."
+
+#: app/admin/routes.py:127
+#, python-format
+msgid "Recalculated %(count)s predictions for match %(id)s."
+msgstr "Przeliczono %(count)s typowań dla meczu %(id)s."
+
+#: app/admin/routes.py:129
+msgid "Match has no result yet."
+msgstr "Mecz nie ma jeszcze wyniku."
+
+#: app/admin/routes.py:133
+msgid "All totals recalculated."
+msgstr "Wszystkie łączne wyniki przeliczone."
+
+#: app/admin/routes.py:151
+#, python-format
+msgid "Cleared %(n)s manual result(s)."
+msgstr "Wyczyszczono %(n)s ręcznych wyników."
+
+#: app/admin/routes.py:152
+#, python-format
+msgid "API sync complete. Updated %(n)s match(es)."
+msgstr "Synchronizacja API zakończona. Zaktualizowano %(n)s meczy."
+
+#: app/auth/routes.py:22
+msgid "Invalid invite code."
+msgstr "Nieprawidłowy kod zaproszenia."
+
+#: app/auth/routes.py:26
+msgid "An account with this email already exists."
+msgstr "Konto z tym adresem e-mail już istnieje."
+
+#: app/auth/routes.py:30
+msgid "Username already taken."
+msgstr "Nazwa użytkownika jest już zajęta."
+
+#: app/auth/routes.py:49
+msgid "Account created successfully. Please log in."
+msgstr "Konto zostało pomyślnie utworzone. Zaloguj się."
+
+#: app/auth/routes.py:67
+msgid "Invalid email or password."
+msgstr "Nieprawidłowy e-mail lub hasło."
+
+#: app/auth/routes.py:81
+msgid "You have been logged out."
+msgstr "Zostałeś wylogowany."
+
+#: app/predict/routes.py:18
+msgid "Predictions are locked for this match."
+msgstr "Typowania dla tego meczu są zablokowane."
+
+#: app/predict/routes.py:28
+msgid "The prediction window for this match has closed."
+msgstr "Okno typowań dla tego meczu zostało zamknięte."
+
+#: app/predict/routes.py:55
+msgid "Prediction saved."
+msgstr "Typowanie zapisane."
+
+#: app/predict/routes.py:76
+msgid "Log in to make a champion pick."
+msgstr "Zaloguj się, aby wybrać mistrza."
+
+#: app/predict/routes.py:80 app/templates/predict/champion.html:35
+msgid "The champion prediction window is closed."
+msgstr "Okno typowania mistrza jest zamknięte."
+
+#: app/predict/routes.py:96
+msgid "Champion pick saved."
+msgstr "Wybór mistrza zapisany."
+
+#: app/templates/base.html:52 app/templates/main/matches.html:2
+msgid "Matches"
+msgstr "Mecze"
+
+#: app/templates/base.html:55 app/templates/main/leaderboard.html:2
+#: app/templates/main/leaderboard.html:5
+msgid "Leaderboard"
+msgstr "Tabela wyników"
+
+#: app/templates/base.html:58
+msgid "Pick a Champion"
+msgstr "Wybierz Mistrza"
+
+#: app/templates/base.html:61 app/templates/main/rules.html:3
+msgid "Rules"
+msgstr "Zasady"
+
+#: app/templates/admin/users.html:29 app/templates/base.html:69
+msgid "Admin"
+msgstr "Admin"
+
+#: app/templates/base.html:79
+msgid "Logout"
+msgstr "Wyloguj"
+
+#: app/templates/auth/login.html:2 app/templates/base.html:83
+#: app/templates/main/index.html:122
+msgid "Login"
+msgstr "Zaloguj się"
+
+#: app/templates/auth/register.html:2 app/templates/base.html:86
+#: app/templates/main/index.html:121
+msgid "Register"
+msgstr "Zarejestruj się"
+
+#: app/templates/admin/dashboard.html:2 app/templates/admin/dashboard.html:6
+msgid "Admin Dashboard"
+msgstr "Panel administratora"
+
+#: app/templates/admin/dashboard.html:10
+msgid "Sync API"
+msgstr "Synchronizuj API"
+
+#: app/templates/admin/dashboard.html:12 app/templates/admin/settings.html:9
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: app/templates/admin/dashboard.html:13 app/templates/admin/users.html:9
+msgid "Users"
+msgstr "Użytkownicy"
+
+#: app/templates/admin/dashboard.html:17
+msgid "Matches without results"
+msgstr "Mecze bez wyników"
+
+#: app/templates/admin/dashboard.html:23
+msgid "Date"
+msgstr "Data"
+
+#: app/templates/admin/dashboard.html:24 app/templates/main/profile.html:29
+msgid "Match"
+msgstr "Mecz"
+
+#: app/templates/admin/dashboard.html:25
+msgid "Phase"
+msgstr "Faza"
+
+#: app/templates/admin/dashboard.html:37 app/templates/admin/set_result.html:2
+msgid "Set Result"
+msgstr "Ustaw wynik"
+
+#: app/templates/admin/dashboard.html:44
+msgid "All matches have results."
+msgstr "Wszystkie mecze mają wyniki."
+
+#: app/templates/admin/dashboard.html:48
+msgid "Recalculate all totals"
+msgstr "Przelicz wszystkie łączne wyniki"
+
+#: app/templates/admin/dashboard.html:52
+msgid "Recalculate all user point totals?"
+msgstr "Przeliczyć wszystkie łączne punkty użytkowników?"
+
+#: app/templates/admin/dashboard.html:53
+msgid "Recalculate All"
+msgstr "Przelicz wszystko"
+
+#: app/templates/admin/set_result.html:6 app/templates/admin/settings.html:6
+#: app/templates/admin/users.html:6
+msgid "Dashboard"
+msgstr "Panel"
+
+#: app/templates/admin/set_result.html:10
+msgid "Set Result:"
+msgstr "Ustaw wynik:"
+
+#: app/templates/admin/settings.html:2
+msgid "Admin Settings"
+msgstr "Ustawienia administratora"
+
+#: app/templates/admin/settings.html:19
+msgid "Shared code required during registration."
+msgstr "Kod wymagany podczas rejestracji."
+
+#: app/templates/admin/settings.html:28
+msgid "Minutes before kick-off when predictions lock."
+msgstr "Minuty przed meczem, kiedy typowania są blokowane."
+
+#: app/templates/admin/users.html:2
+msgid "Admin Users"
+msgstr "Użytkownicy — Admin"
+
+#: app/templates/admin/users.html:14
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: app/templates/admin/users.html:15
+msgid "Email"
+msgstr "E-mail"
+
+#: app/templates/admin/users.html:16 app/templates/main/index.html:69
+#: app/templates/main/match_detail.html:80 app/templates/main/profile.html:32
+#: app/templates/main/rules.html:18
+msgid "Points"
+msgstr "Punkty"
+
+#: app/templates/admin/users.html:17
+msgid "Role"
+msgstr "Rola"
+
+#: app/templates/admin/users.html:31 app/templates/main/index.html:68
+#: app/templates/main/leaderboard.html:14
+#: app/templates/main/leaderboard.html:69
+#: app/templates/main/match_detail.html:78
+msgid "Player"
+msgstr "Gracz"
+
+#: app/templates/admin/users.html:41
+msgid "Demote"
+msgstr "Zdegraduj"
+
+#: app/templates/admin/users.html:41
+msgid "Promote"
+msgstr "Awansuj"
+
+#: app/templates/auth/login.html:9
+msgid "Log In"
+msgstr "Zaloguj się"
+
+#: app/templates/auth/login.html:40
+msgid "No account?"
+msgstr "Nie masz konta?"
+
+#: app/templates/auth/login.html:40
+msgid "Register here"
+msgstr "Zarejestruj się tutaj"
+
+#: app/templates/auth/register.html:9
+msgid "Create Account"
+msgstr "Utwórz konto"
+
+#: app/templates/auth/register.html:15
+msgid "YourName"
+msgstr "TwójNick"
+
+#: app/templates/auth/register.html:47
+msgid "Group invite code"
+msgstr "Kod zaproszenia do grupy"
+
+#: app/templates/auth/register.html:59
+msgid "Already have an account?"
+msgstr "Masz już konto?"
+
+#: app/templates/auth/register.html:59 app/templates/main/leaderboard.html:59
+msgid "Log in"
+msgstr "Zaloguj się"
+
+#: app/templates/main/index.html:11 app/templates/main/index.html:130
+msgid "Upcoming Matches"
+msgstr "Nadchodzące mecze"
+
+#: app/templates/main/index.html:22 app/templates/main/index.html:140
+#: app/templates/main/match_detail.html:12 app/templates/main/matches.html:122
+msgid "Group"
+msgstr "Grupa"
+
+#: app/templates/main/index.html:23
+msgid "Predicted"
+msgstr "Typowane"
+
+#: app/templates/main/index.html:57 app/templates/main/index.html:174
+msgid "No upcoming matches."
+msgstr "Brak nadchodzących meczów."
+
+#: app/templates/main/index.html:62
+msgid "Top 5"
+msgstr "Top 5"
+
+#: app/templates/main/index.html:83
+msgid "Full leaderboard"
+msgstr "Pełna tabela"
+
+#: app/templates/main/index.html:86
+msgid "No scores yet."
+msgstr "Brak wyników."
+
+#: app/templates/main/index.html:98
+msgid "What it is"
+msgstr "O co chodzi"
+
+#: app/templates/main/index.html:99
+msgid ""
+"Predict exact scores for every FIFA World Cup 2026 match. Each match has "
+"a prediction window that closes automatically before kick-off."
+msgstr ""
+"Typuj dokładne wyniki każdego meczu Mistrzostw Świata FIFA 2026. Każdy "
+"mecz ma okno typowań, które zamyka się automatycznie przed meczem."
+
+#: app/templates/main/index.html:106
+msgid "How scoring works"
+msgstr "Jak działa punktacja"
+
+#: app/templates/main/index.html:108
+msgid "Group stage:"
+msgstr "Faza grupowa:"
+
+#: app/templates/main/index.html:108
+msgid "exact score"
+msgstr "dokładny wynik"
+
+#: app/templates/main/index.html:108
+msgid "correct outcome."
+msgstr "poprawny wynik."
+
+#: app/templates/main/index.html:109
+msgid "Knockout stage:"
+msgstr "Faza pucharowa:"
+
+#: app/templates/main/index.html:109
+msgid "exact"
+msgstr "dokładny"
+
+#: app/templates/main/index.html:109
+msgid "outcome."
+msgstr "wynik."
+
+#: app/templates/main/index.html:110
+msgid "Tournament champion pick:"
+msgstr "Typowanie mistrza:"
+
+#: app/templates/main/index.html:118
+msgid "How to join"
+msgstr "Jak dołączyć"
+
+#: app/templates/main/index.html:119
+msgid ""
+"Registration requires an invite code. Once in, you can submit or update "
+"predictions for any match that hasn't locked yet."
+msgstr ""
+"Rejestracja wymaga kodu zaproszenia. Po dołączeniu możesz typować lub "
+"aktualizować wyniki dla każdego meczu, który nie został jeszcze zablokowany."
+
+#: app/templates/main/leaderboard.html:15
+#: app/templates/main/leaderboard.html:70
+msgid "Pts"
+msgstr "Pkt"
+
+#: app/templates/main/leaderboard.html:16
+#: app/templates/main/leaderboard.html:71
+msgid "Exact score — Group Stage"
+msgstr "Dokładny wynik — faza grupowa"
+
+#: app/templates/main/leaderboard.html:16
+#: app/templates/main/leaderboard.html:71
+msgid "Exact G"
+msgstr "Dok. G"
+
+#: app/templates/main/leaderboard.html:17
+#: app/templates/main/leaderboard.html:72
+msgid "Correct outcome (no exact score) — Group Stage"
+msgstr "Poprawny wynik (bez dokładnego) — faza grupowa"
+
+#: app/templates/main/leaderboard.html:17
+#: app/templates/main/leaderboard.html:72
+msgid "Outcome G"
+msgstr "Wynik G"
+
+#: app/templates/main/leaderboard.html:18
+#: app/templates/main/leaderboard.html:73
+msgid "Exact score — Knockout Stage"
+msgstr "Dokładny wynik — faza pucharowa"
+
+#: app/templates/main/leaderboard.html:18
+#: app/templates/main/leaderboard.html:73
+msgid "Exact KO"
+msgstr "Dok. KO"
+
+#: app/templates/main/leaderboard.html:19
+#: app/templates/main/leaderboard.html:74
+msgid "Correct outcome (no exact score) — Knockout Stage"
+msgstr "Poprawny wynik (bez dokładnego) — faza pucharowa"
+
+#: app/templates/main/leaderboard.html:19
+#: app/templates/main/leaderboard.html:74
+msgid "Outcome KO"
+msgstr "Wynik KO"
+
+#: app/templates/main/leaderboard.html:34
+msgid "this could be you"
+msgstr "to możesz być ty"
+
+#: app/templates/main/leaderboard.html:35
+msgid "Join"
+msgstr "Dołącz"
+
+#: app/templates/main/leaderboard.html:59
+msgid "Sample data for illustration."
+msgstr "Przykładowe dane poglądowe."
+
+#: app/templates/main/leaderboard.html:59
+msgid "to see the real standings."
+msgstr "aby zobaczyć prawdziwe wyniki."
+
+#: app/templates/main/leaderboard.html:84
+msgid "admin"
+msgstr "admin"
+
+#: app/templates/main/leaderboard.html:93
+msgid "No players yet."
+msgstr "Brak graczy."
+
+#: app/templates/main/leaderboard.html:102
+msgid "Exact"
+msgstr "Dokładny"
+
+#: app/templates/main/leaderboard.html:102
+msgid "correct scoreline"
+msgstr "poprawny wynik meczu"
+
+#: app/templates/main/leaderboard.html:103
+msgid "Outcome"
+msgstr "Wynik"
+
+#: app/templates/main/leaderboard.html:103
+msgid "correct result (W/D/L) without exact score"
+msgstr "poprawny wynik (W/R/P) bez dokładnego"
+
+#: app/templates/main/leaderboard.html:104
+msgid "Knockout Stage"
+msgstr "Faza pucharowa"
+
+#: app/templates/main/match_detail.html:6 app/templates/main/matches.html:6
+msgid "All Matches"
+msgstr "Wszystkie mecze"
+
+#: app/templates/main/match_detail.html:32 app/templates/main/matches.html:47
+#: app/templates/main/matches.html:150
+msgid "Locked"
+msgstr "Zablokowane"
+
+#: app/templates/main/match_detail.html:40
+msgid "Your Prediction"
+msgstr "Twoje typowanie"
+
+#: app/templates/main/match_detail.html:58 app/templates/main/matches.html:69
+#: app/templates/main/matches.html:173
+msgid "Save"
+msgstr "Zapisz"
+
+#: app/templates/main/match_detail.html:66
+msgid "Your prediction:"
+msgstr "Twoje typowanie:"
+
+#: app/templates/main/match_detail.html:74
+msgid "All Predictions"
+msgstr "Wszystkie typowania"
+
+#: app/templates/main/match_detail.html:79 app/templates/main/rules.html:17
+msgid "Prediction"
+msgstr "Typowanie"
+
+#: app/templates/main/matches.html:10
+msgid "By phase"
+msgstr "Według fazy"
+
+#: app/templates/main/matches.html:14
+msgid "Chronological"
+msgstr "Chronologicznie"
+
+#: app/templates/main/matches.html:27 app/templates/main/matches.html:131
+msgid "You picked this match"
+msgstr "Typowałeś ten mecz"
+
+#: app/templates/main/matches.html:29 app/templates/main/matches.html:133
+msgid "Not picked yet"
+msgstr "Jeszcze nie typowane"
+
+#: app/templates/main/matches.html:50 app/templates/main/matches.html:153
+msgid "Details"
+msgstr "Szczegóły"
+
+#: app/templates/main/matches.html:69 app/templates/main/matches.html:173
+msgid "Update"
+msgstr "Aktualizuj"
+
+#: app/templates/main/matches.html:75 app/templates/main/matches.html:179
+msgid "Log in to make a prediction"
+msgstr "Zaloguj się, aby typować"
+
+#: app/templates/main/matches.html:81 app/templates/main/matches.html:185
+#: app/templates/predict/champion.html:38
+msgid "Your pick:"
+msgstr "Twój typ:"
+
+#: app/templates/main/profile.html:2
+msgid "Profile"
+msgstr "Profil"
+
+#: app/templates/main/profile.html:12
+msgid "Champion pick:"
+msgstr "Wybór mistrza:"
+
+#: app/templates/main/profile.html:19
+msgid "No champion pick yet."
+msgstr "Brak wyboru mistrza."
+
+#: app/templates/main/profile.html:19
+msgid "Pick one"
+msgstr "Wybierz"
+
+#: app/templates/main/profile.html:23
+msgid "Match Predictions"
+msgstr "Typowania meczów"
+
+#: app/templates/main/profile.html:30
+msgid "Your pick"
+msgstr "Twój typ"
+
+#: app/templates/main/profile.html:31
+msgid "Result"
+msgstr "Wynik"
+
+#: app/templates/main/profile.html:64
+msgid "No predictions made yet."
+msgstr "Brak typowań."
+
+#: app/templates/main/rules.html:6
+msgid "How to Play"
+msgstr "Jak grać"
+
+#: app/templates/main/rules.html:12
+msgid "Scoring"
+msgstr "Punktacja"
+
+#: app/templates/main/rules.html:23
+msgid "Group stage — exact score"
+msgstr "Faza grupowa — dokładny wynik"
+
+#: app/templates/main/rules.html:27
+msgid "Group stage — correct outcome (W/D/L)"
+msgstr "Faza grupowa — poprawny wynik (W/R/P)"
+
+#: app/templates/main/rules.html:31
+msgid "Knockout stage — exact score"
+msgstr "Faza pucharowa — dokładny wynik"
+
+#: app/templates/main/rules.html:35
+msgid "Knockout stage — correct outcome"
+msgstr "Faza pucharowa — poprawny wynik"
+
+#: app/templates/main/rules.html:39
+msgid "Tournament champion pick"
+msgstr "Typowanie mistrza turnieju"
+
+#: app/templates/main/rules.html:50
+msgid "How It Works"
+msgstr "Jak to działa"
+
+#: app/templates/main/rules.html:53
+msgid "Prediction window"
+msgstr "Okno typowań"
+
+#: app/templates/main/rules.html:53
+msgid "Submit or update your score prediction for any match up until it locks."
+msgstr "Dodaj lub zaktualizuj typowanie dla każdego meczu, aż do jego zablokowania."
+
+#: app/templates/main/rules.html:56
+msgid "Lock time"
+msgstr "Czas blokady"
+
+#: app/templates/main/rules.html:56
+msgid ""
+"Predictions close automatically 30 minutes before kick-off. After that, "
+"no changes are possible."
+msgstr ""
+"Typowania zamykają się automatycznie 30 minut przed meczem. Po tym czasie "
+"zmiany nie są możliwe."
+
+#: app/templates/main/rules.html:59
+msgid "Knockout scoring"
+msgstr "Punktacja fazy pucharowej"
+
+#: app/templates/main/rules.html:59
+msgid ""
+"Points are awarded for the 90-minute result. Extra time and penalties do "
+"not change the outcome used for scoring."
+msgstr ""
+"Punkty przyznawane są za wynik po 90 minutach. Dogrywka i rzuty karne nie "
+"wpływają na wynik brany pod uwagę."
+
+#: app/templates/main/rules.html:62
+msgid "Champion pick"
+msgstr "Wybór mistrza"
+
+#: app/templates/main/rules.html:62
+msgid ""
+"Pick your tournament winner before the window closes. Correct pick earns "
+"a 20-point bonus on top of all match points."
+msgstr ""
+"Wybierz zwycięzcę turnieju przed zamknięciem okna. Prawidłowy wybór to "
+"premia 20 punktów ponad punkty za mecze."
+
+#: app/templates/main/rules.html:65
+msgid "Result corrections"
+msgstr "Korekty wyników"
+
+#: app/templates/main/rules.html:65
+msgid ""
+"If an official result is corrected, your points are recalculated "
+"automatically."
+msgstr ""
+"Jeśli oficjalny wynik zostanie skorygowany, twoje punkty zostaną "
+"automatycznie przeliczone."
+
+#: app/templates/predict/champion.html:2 app/templates/predict/champion.html:5
+msgid "Champion Pick"
+msgstr "Wybór Mistrza"
+
+#: app/templates/predict/champion.html:6
+msgid "Worth"
+msgstr "Warte"
+
+#: app/templates/predict/champion.html:6
+msgid "points"
+msgstr "punktów"
+
+#: app/templates/predict/champion.html:6
+msgid "if correct. Window closes when the tournament starts."
+msgstr "przy prawidłowym typie. Okno zamyka się wraz ze startem turnieju."
+
+#: app/templates/predict/champion.html:11
+msgid "Pick the team you think will win the 2026 FIFA World Cup and earn"
+msgstr "Wybierz drużynę, która według ciebie wygra Mistrzostwa Świata FIFA 2026 i zdobądź"
+
+#: app/templates/predict/champion.html:11
+msgid "bonus points"
+msgstr "punkty bonusowe"
+
+#: app/templates/predict/champion.html:11
+msgid "if you're right."
+msgstr "jeśli masz rację."
+
+#: app/templates/predict/champion.html:12
+msgid "Log in to make your pick"
+msgstr "Zaloguj się, aby dokonać wyboru"
+
+#: app/templates/predict/champion.html:30
+msgid "Current pick:"
+msgstr "Aktualny wybór:"
+
+#: app/templates/predict/champion.html:44
+msgid "You did not make a champion pick."
+msgstr "Nie dokonałeś wyboru mistrza."
+
+#: app/templates/predict/champion.html:50
+msgid "Window closes:"
+msgstr "Okno zamknięcia:"

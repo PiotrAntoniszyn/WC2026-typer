@@ -1,18 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Register — WC2026 Typer{% endblock %}
+{% block title %}{{ _('Register') }} — WC2026 Typer{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-6">
     <div class="card shadow-sm">
       <div class="card-body p-4">
-        <h2 class="card-title mb-4">Create Account</h2>
+        <h2 class="card-title mb-4">{{ _('Create Account') }}</h2>
         <form method="POST" action="{{ url_for('auth.register') }}" novalidate>
           {{ form.hidden_tag() }}
 
           <div class="mb-3">
             {{ form.username.label(class="form-label") }}
-            {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else ""), placeholder="YourName") }}
+            {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else ""), placeholder=_('YourName')) }}
             {% for error in form.username.errors %}
               <div class="invalid-feedback">{{ error }}</div>
             {% endfor %}
@@ -44,7 +44,7 @@
 
           <div class="mb-3">
             {{ form.invite_code.label(class="form-label") }}
-            {{ form.invite_code(class="form-control" + (" is-invalid" if form.invite_code.errors else ""), placeholder="Group invite code") }}
+            {{ form.invite_code(class="form-control" + (" is-invalid" if form.invite_code.errors else ""), placeholder=_('Group invite code')) }}
             {% for error in form.invite_code.errors %}
               <div class="invalid-feedback">{{ error }}</div>
             {% endfor %}
@@ -56,7 +56,7 @@
         </form>
         <hr>
         <p class="text-center mb-0 small">
-          Already have an account? <a href="{{ url_for('auth.login') }}">Log in</a>
+          {{ _('Already have an account?') }} <a href="{{ url_for('auth.login') }}">{{ _('Log in') }}</a>
         </p>
       </div>
     </div>

@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Login — WC2026 Typer{% endblock %}
+{% block title %}{{ _('Login') }} — WC2026 Typer{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-5">
     <div class="card shadow-sm">
       <div class="card-body p-4">
-        <h2 class="card-title mb-4">Log In</h2>
+        <h2 class="card-title mb-4">{{ _('Log In') }}</h2>
         <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
           {{ form.hidden_tag() }}
 
@@ -37,7 +37,7 @@
         </form>
         <hr>
         <p class="text-center mb-0 small">
-          No account? <a href="{{ url_for('auth.register') }}">Register here</a>
+          {{ _('No account?') }} <a href="{{ url_for('auth.register') }}">{{ _('Register here') }}</a>
         </p>
       </div>
     </div>

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Leaderboard — WC2026 Typer{% endblock %}
+{% block title %}{{ _('Leaderboard') }} — WC2026 Typer{% endblock %}
 
 {% block content %}
-<h2 class="fw-bold mb-4">Leaderboard</h2>
+<h2 class="fw-bold mb-4">{{ _('Leaderboard') }}</h2>
 
 {% if not current_user.is_authenticated %}
 
@@ -11,12 +11,12 @@
     <thead class="table-dark">
       <tr>
         <th>#</th>
-        <th>Player</th>
-        <th class="text-end">Pts</th>
-        <th class="text-center" title="Exact score — Group Stage">Exact G</th>
-        <th class="text-center" title="Correct outcome (no exact score) — Group Stage">Outcome G</th>
-        <th class="text-center" title="Exact score — Knockout Stage">Exact KO</th>
-        <th class="text-center" title="Correct outcome (no exact score) — Knockout Stage">Outcome KO</th>
+        <th>{{ _('Player') }}</th>
+        <th class="text-end">{{ _('Pts') }}</th>
+        <th class="text-center" title="{{ _('Exact score — Group Stage') }}">{{ _('Exact G') }}</th>
+        <th class="text-center" title="{{ _('Correct outcome (no exact score) — Group Stage') }}">{{ _('Outcome G') }}</th>
+        <th class="text-center" title="{{ _('Exact score — Knockout Stage') }}">{{ _('Exact KO') }}</th>
+        <th class="text-center" title="{{ _('Correct outcome (no exact score) — Knockout Stage') }}">{{ _('Outcome KO') }}</th>
       </tr>
     </thead>
     <tbody>
@@ -31,8 +31,8 @@
       <tr class="table-warning fw-semibold" style="border-top: 2px dashed #ffc107; border-bottom: 2px dashed #ffc107;">
         <td>3</td>
         <td>
-          <span class="text-muted fst-italic">this could be you</span>
-          <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-success ms-2">Join</a>
+          <span class="text-muted fst-italic">{{ _('this could be you') }}</span>
+          <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-success ms-2">{{ _('Join') }}</a>
         </td>
         <td class="text-end text-muted">?</td>
         <td class="text-center text-muted">?</td>
@@ -56,7 +56,7 @@
   </table>
 </div>
 <p class="text-muted small mt-2">
-  Sample data for illustration. <a href="{{ url_for('auth.login') }}">Log in</a> to see the real standings.
+  {{ _('Sample data for illustration.') }} <a href="{{ url_for('auth.login') }}">{{ _('Log in') }}</a> {{ _('to see the real standings.') }}
 </p>
 
 {% else %}
@@ -66,12 +66,12 @@
     <thead class="table-dark">
       <tr>
         <th>#</th>
-        <th>Player</th>
-        <th class="text-end">Pts</th>
-        <th class="text-center" title="Exact score — Group Stage">Exact G</th>
-        <th class="text-center" title="Correct outcome (no exact score) — Group Stage">Outcome G</th>
-        <th class="text-center" title="Exact score — Knockout Stage">Exact KO</th>
-        <th class="text-center" title="Correct outcome (no exact score) — Knockout Stage">Outcome KO</th>
+        <th>{{ _('Player') }}</th>
+        <th class="text-end">{{ _('Pts') }}</th>
+        <th class="text-center" title="{{ _('Exact score — Group Stage') }}">{{ _('Exact G') }}</th>
+        <th class="text-center" title="{{ _('Correct outcome (no exact score) — Group Stage') }}">{{ _('Outcome G') }}</th>
+        <th class="text-center" title="{{ _('Exact score — Knockout Stage') }}">{{ _('Exact KO') }}</th>
+        <th class="text-center" title="{{ _('Correct outcome (no exact score) — Knockout Stage') }}">{{ _('Outcome KO') }}</th>
       </tr>
     </thead>
     <tbody>
@@ -81,7 +81,7 @@
           <td>{{ loop.index }}</td>
           <td>
             {{ user.username }}
-            {% if user.is_admin %}<span class="badge bg-warning text-dark ms-1 small">admin</span>{% endif %}
+            {% if user.is_admin %}<span class="badge bg-warning text-dark ms-1 small">{{ _('admin') }}</span>{% endif %}
           </td>
           <td class="text-end">{{ user.total_points }}</td>
           <td class="text-center">{{ s.exact_group }}</td>
@@ -90,7 +90,7 @@
           <td class="text-center">{{ s.outcome_ko }}</td>
         </tr>
       {% else %}
-        <tr><td colspan="7" class="text-muted text-center">No players yet.</td></tr>
+        <tr><td colspan="7" class="text-muted text-center">{{ _('No players yet.') }}</td></tr>
       {% endfor %}
     </tbody>
   </table>
@@ -99,8 +99,8 @@
 {% endif %}
 
 <p class="text-muted small mt-2">
-  <strong>Exact</strong> — correct scoreline &bull;
-  <strong>Outcome</strong> — correct result (W/D/L) without exact score &bull;
-  <strong>G</strong> = Group Stage &bull; <strong>KO</strong> = Knockout Stage
+  <strong>{{ _('Exact') }}</strong> — {{ _('correct scoreline') }} &bull;
+  <strong>{{ _('Outcome') }}</strong> — {{ _('correct result (W/D/L) without exact score') }} &bull;
+  <strong>G</strong> = {{ _('Group Stage') }} &bull; <strong>KO</strong> = {{ _('Knockout Stage') }}
 </p>
 {% endblock %}

@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Admin Settings — WC2026 Typer{% endblock %}
+{% block title %}{{ _('Admin Settings') }} — WC2026 Typer{% endblock %}
 
 {% block content %}
 <div class="mb-3">
-  <a href="{{ url_for('admin.dashboard') }}" class="text-decoration-none">&larr; Dashboard</a>
+  <a href="{{ url_for('admin.dashboard') }}" class="text-decoration-none">&larr; {{ _('Dashboard') }}</a>
 </div>
 
-<h4 class="fw-bold mb-4">Settings</h4>
+<h4 class="fw-bold mb-4">{{ _('Settings') }}</h4>
 
 <div class="card shadow-sm" style="max-width: 420px;">
   <div class="card-body">
@@ -16,7 +16,7 @@
       <div class="mb-3">
         {{ form.invite_code.label(class="form-label") }}
         {{ form.invite_code(class="form-control" + (" is-invalid" if form.invite_code.errors else "")) }}
-        <div class="form-text">Shared code required during registration.</div>
+        <div class="form-text">{{ _('Shared code required during registration.') }}</div>
         {% for e in form.invite_code.errors %}
           <div class="invalid-feedback">{{ e }}</div>
         {% endfor %}
@@ -25,7 +25,7 @@
       <div class="mb-3">
         {{ form.lock_minutes_before.label(class="form-label") }}
         {{ form.lock_minutes_before(class="form-control" + (" is-invalid" if form.lock_minutes_before.errors else "")) }}
-        <div class="form-text">Minutes before kick-off when predictions lock.</div>
+        <div class="form-text">{{ _('Minutes before kick-off when predictions lock.') }}</div>
         {% for e in form.lock_minutes_before.errors %}
           <div class="invalid-feedback">{{ e }}</div>
         {% endfor %}

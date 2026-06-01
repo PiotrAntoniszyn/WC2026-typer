@@ -8,7 +8,7 @@
   {# Two-column layout for logged-in users #}
   <div class="row g-4">
     <div class="col-lg-7">
-      <h4 class="fw-bold mb-3">Upcoming Matches</h4>
+      <h4 class="fw-bold mb-3">{{ _('Upcoming Matches') }}</h4>
       {% if upcoming %}
         <div class="row g-3">
           {% for match in upcoming %}
@@ -19,8 +19,8 @@
                 <div class="card shadow-sm h-100">
                   <div class="card-body py-3">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                      <span class="badge bg-secondary">{{ match.phase.label }}{% if match.group_letter %} — Group {{ match.group_letter }}{% endif %}</span>
-                      {% if pred %}<span class="text-success ms-1" title="Predicted">&#10003;</span>{% endif %}
+                      <span class="badge bg-secondary">{{ match.phase.label }}{% if match.group_letter %} — {{ _('Group') }} {{ match.group_letter }}{% endif %}</span>
+                      {% if pred %}<span class="text-success ms-1" title="{{ _('Predicted') }}">&#10003;</span>{% endif %}
                       <small class="text-muted">{{ match.match_datetime.strftime("%d %b %Y %H:%M") }} UTC</small>
                     </div>
                     <div class="d-flex align-items-center my-2" style="gap:0">
@@ -54,19 +54,19 @@
           {% endfor %}
         </div>
       {% else %}
-        <p class="text-muted">No upcoming matches.</p>
+        <p class="text-muted">{{ _('No upcoming matches.') }}</p>
       {% endif %}
     </div>
 
     <div class="col-lg-5">
-      <h4 class="fw-bold mb-3">Top 5</h4>
+      <h4 class="fw-bold mb-3">{{ _('Top 5') }}</h4>
       {% if top_users %}
         <table class="table table-sm table-hover">
           <thead class="table-dark">
             <tr>
               <th>#</th>
-              <th>Player</th>
-              <th class="text-end">Points</th>
+              <th>{{ _('Player') }}</th>
+              <th class="text-end">{{ _('Points') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -80,10 +80,10 @@
           </tbody>
         </table>
         <a href="{{ url_for('main.leaderboard') }}" class="btn btn-sm btn-outline-secondary">
-          Full leaderboard &rarr;
+          {{ _('Full leaderboard') }} &rarr;
         </a>
       {% else %}
-        <p class="text-muted">No scores yet.</p>
+        <p class="text-muted">{{ _('No scores yet.') }}</p>
       {% endif %}
     </div>
   </div>
@@ -95,19 +95,19 @@
     <div class="col-md-4">
       <div class="card h-100">
         <div class="card-body">
-          <h6 class="card-title fw-bold">What it is</h6>
-          <p class="card-text text-muted small">Predict exact scores for every FIFA World Cup 2026 match. Each match has a prediction window that closes automatically before kick-off.</p>
+          <h6 class="card-title fw-bold">{{ _('What it is') }}</h6>
+          <p class="card-text text-muted small">{{ _('Predict exact scores for every FIFA World Cup 2026 match. Each match has a prediction window that closes automatically before kick-off.') }}</p>
         </div>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card h-100">
         <div class="card-body">
-          <h6 class="card-title fw-bold">How scoring works</h6>
+          <h6 class="card-title fw-bold">{{ _('How scoring works') }}</h6>
           <p class="card-text text-muted small">
-            Group stage: <strong>3 pts</strong> exact score / <strong>1 pt</strong> correct outcome.<br>
-            Knockout stage: <strong>5 pts</strong> exact / <strong>2 pts</strong> outcome.<br>
-            Tournament champion pick: <strong>20 pts</strong>.
+            {{ _('Group stage:') }} <strong>3 pts</strong> {{ _('exact score') }} / <strong>1 pt</strong> {{ _('correct outcome.') }}<br>
+            {{ _('Knockout stage:') }} <strong>5 pts</strong> {{ _('exact') }} / <strong>2 pts</strong> {{ _('outcome.') }}<br>
+            {{ _('Tournament champion pick:') }} <strong>20 pts</strong>.
           </p>
         </div>
       </div>
@@ -115,11 +115,11 @@
     <div class="col-md-4">
       <div class="card h-100">
         <div class="card-body">
-          <h6 class="card-title fw-bold">How to join</h6>
-          <p class="card-text text-muted small">Registration requires an invite code. Once in, you can submit or update predictions for any match that hasn't locked yet.</p>
+          <h6 class="card-title fw-bold">{{ _('How to join') }}</h6>
+          <p class="card-text text-muted small">{{ _("Registration requires an invite code. Once in, you can submit or update predictions for any match that hasn't locked yet.") }}</p>
           <div class="d-flex gap-2 mt-2">
-            <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-sm">Register</a>
-            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-sm">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-sm">{{ _('Register') }}</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-sm">{{ _('Login') }}</a>
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
   </div>
 
   {# Horizontal match grid for visitors #}
-  <h4 class="fw-bold mb-3">Upcoming Matches</h4>
+  <h4 class="fw-bold mb-3">{{ _('Upcoming Matches') }}</h4>
   {% if upcoming %}
     <div class="row g-3 mb-4">
       {% for match in upcoming %}
@@ -137,7 +137,7 @@
             <div class="card shadow-sm h-100">
               <div class="card-body py-3">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="badge bg-secondary">{{ match.phase.label }}{% if match.group_letter %} — Group {{ match.group_letter }}{% endif %}</span>
+                  <span class="badge bg-secondary">{{ match.phase.label }}{% if match.group_letter %} — {{ _('Group') }} {{ match.group_letter }}{% endif %}</span>
                   <small class="text-muted">{{ match.match_datetime.strftime("%d %b %Y %H:%M") }} UTC</small>
                 </div>
                 <div class="d-flex align-items-center my-2" style="gap:0">
@@ -171,7 +171,7 @@
       {% endfor %}
     </div>
   {% else %}
-    <p class="text-muted mb-4">No upcoming matches.</p>
+    <p class="text-muted mb-4">{{ _('No upcoming matches.') }}</p>
   {% endif %}
 
 {% endif %}

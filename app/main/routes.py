@@ -1,7 +1,7 @@
 from collections import defaultdict
 from datetime import datetime, timezone
 
-from flask import render_template, request
+from flask import redirect, render_template, request, session, url_for
 from flask_login import current_user, login_required
 
 from app.main import main_bp
@@ -146,6 +146,13 @@ def leaderboard():
 @main_bp.route("/rules")
 def rules():
     return render_template("main/rules.html")
+
+
+@main_bp.route("/set-lang/<lang>")
+def set_lang(lang: str):
+    if lang in ("en", "pl"):
+        session["lang"] = lang
+    return redirect(request.referrer or url_for("main.index"))
 
 
 @main_bp.route("/profile")

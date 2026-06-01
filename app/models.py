@@ -1,6 +1,8 @@
 import enum
 import datetime
 
+from flask_babel import lazy_gettext as _l
+
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import (
     Boolean,
@@ -40,13 +42,13 @@ class PhaseEnum(str, enum.Enum):
     @property
     def label(self) -> str:
         labels = {
-            PhaseEnum.GROUP: "Group Stage",
-            PhaseEnum.R32: "Round of 32",
-            PhaseEnum.R16: "Round of 16",
-            PhaseEnum.QF: "Quarter-finals",
-            PhaseEnum.SF: "Semi-finals",
-            PhaseEnum.THIRD: "3rd Place",
-            PhaseEnum.FINAL: "Final",
+            PhaseEnum.GROUP: _l("Group Stage"),
+            PhaseEnum.R32: _l("Round of 32"),
+            PhaseEnum.R16: _l("Round of 16"),
+            PhaseEnum.QF: _l("Quarter-finals"),
+            PhaseEnum.SF: _l("Semi-finals"),
+            PhaseEnum.THIRD: _l("3rd Place"),
+            PhaseEnum.FINAL: _l("Final"),
         }
         return labels[self]
 

@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Matches — WC2026 Typer{% endblock %}
+{% block title %}{{ _('Matches') }} — WC2026 Typer{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="fw-bold mb-0">All Matches</h2>
+  <h2 class="fw-bold mb-0">{{ _('All Matches') }}</h2>
   <div class="btn-group" role="group">
     <a href="{{ url_for('main.matches', sort='phase') }}"
        class="btn btn-sm {{ 'btn-primary' if sort_mode == 'phase' else 'btn-outline-secondary' }}">
-      By phase
+      {{ _('By phase') }}
     </a>
     <a href="{{ url_for('main.matches', sort='chrono') }}"
        class="btn btn-sm {{ 'btn-primary' if sort_mode == 'chrono' else 'btn-outline-secondary' }}">
-      Chronological
+      {{ _('Chronological') }}
     </a>
   </div>
 </div>
@@ -24,9 +24,9 @@
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
           <div class="d-flex align-items-center gap-2 flex-wrap">
             {% if pred %}
-              <span class="text-success" title="You picked this match">&#10003;</span>
+              <span class="text-success" title="{{ _('You picked this match') }}">&#10003;</span>
             {% else %}
-              <span class="text-secondary" title="Not picked yet">&ndash;</span>
+              <span class="text-secondary" title="{{ _('Not picked yet') }}">&ndash;</span>
             {% endif %}
             {{ match.home_team | flag_img("sm") }}
             <span class="fw-semibold">{{ match.home_team.name }}</span>
@@ -44,10 +44,10 @@
           <div class="d-flex align-items-center gap-2 flex-wrap text-end">
             <small class="text-muted">{{ match.match_datetime.strftime("%d %b %H:%M") }} UTC</small>
             {% if match.is_locked %}
-              <span class="badge bg-secondary">Locked</span>
+              <span class="badge bg-secondary">{{ _('Locked') }}</span>
             {% endif %}
             <a href="{{ url_for('main.match_detail', match_id=match.id) }}"
-               class="btn btn-sm btn-outline-secondary py-0 px-2">Details</a>
+               class="btn btn-sm btn-outline-secondary py-0 px-2">{{ _('Details') }}</a>
           </div>
         </div>
         {% if not match.is_locked %}
@@ -66,19 +66,19 @@
                      value="{{ pred.away_score if pred else '' }}"
                      placeholder="0" required>
               <button type="submit" class="btn btn-sm {{ 'btn-primary' if pred else 'btn-success' }}">
-                {{ "Update" if pred else "Save" }}
+                {{ _('Update') if pred else _('Save') }}
               </button>
             </form>
           {% else %}
             <div class="mt-2">
               <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline-secondary">
-                Log in to make a prediction
+                {{ _('Log in to make a prediction') }}
               </a>
             </div>
           {% endif %}
         {% elif pred %}
           <div class="mt-1 small text-muted">
-            Your pick: <strong>{{ pred.home_score }} – {{ pred.away_score }}</strong>
+            {{ _('Your pick:') }} <strong>{{ pred.home_score }} – {{ pred.away_score }}</strong>
             {% if pred.points_awarded is not none %}
               &mdash; <strong class="text-dark">{{ pred.points_awarded }} pts</strong>
             {% endif %}
@@ -97,7 +97,6 @@
       {% set is_first = not first_phase.found %}
       {% set first_phase.found = true %}
 
-      {# Count matches in this phase #}
       {% set ns = namespace(count=0) %}
       {% for matches in by_phase[phase].values() %}
         {% set ns.count = ns.count + matches|length %}
@@ -120,19 +119,18 @@
           <div class="accordion-body p-2">
             {% for group_letter, matches in by_phase[phase].items()|sort %}
               {% if group_letter %}
-                <h6 class="text-muted mt-3 mb-1 ps-1">Group {{ group_letter }}</h6>
+                <h6 class="text-muted mt-3 mb-1 ps-1">{{ _('Group') }} {{ group_letter }}</h6>
               {% endif %}
               <div class="list-group mb-2">
                 {% for match in matches %}
                   {% set pred = user_predictions.get(match.id) %}
                   <div class="list-group-item py-2">
-                    {# Top row: teams + score/result #}
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                       <div class="d-flex align-items-center gap-2 flex-wrap">
                         {% if pred %}
-                          <span class="text-success" title="You picked this match">&#10003;</span>
+                          <span class="text-success" title="{{ _('You picked this match') }}">&#10003;</span>
                         {% else %}
-                          <span class="text-secondary" title="Not picked yet">&ndash;</span>
+                          <span class="text-secondary" title="{{ _('Not picked yet') }}">&ndash;</span>
                         {% endif %}
 
                         {{ match.home_team | flag_img("sm") }}
@@ -149,14 +147,13 @@
                       <div class="d-flex align-items-center gap-2 flex-wrap text-end">
                         <small class="text-muted">{{ match.match_datetime.strftime("%d %b %H:%M") }} UTC</small>
                         {% if match.is_locked %}
-                          <span class="badge bg-secondary">Locked</span>
+                          <span class="badge bg-secondary">{{ _('Locked') }}</span>
                         {% endif %}
                         <a href="{{ url_for('main.match_detail', match_id=match.id) }}"
-                           class="btn btn-sm btn-outline-secondary py-0 px-2">Details</a>
+                           class="btn btn-sm btn-outline-secondary py-0 px-2">{{ _('Details') }}</a>
                       </div>
                     </div>
 
-                    {# Prediction row #}
                     {% if not match.is_locked %}
                       {% if current_user.is_authenticated %}
                         <form method="POST"
@@ -173,19 +170,19 @@
                                  value="{{ pred.away_score if pred else '' }}"
                                  placeholder="0" required>
                           <button type="submit" class="btn btn-sm {{ 'btn-primary' if pred else 'btn-success' }}">
-                            {{ "Update" if pred else "Save" }}
+                            {{ _('Update') if pred else _('Save') }}
                           </button>
                         </form>
                       {% else %}
                         <div class="mt-2">
                           <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline-secondary">
-                            Log in to make a prediction
+                            {{ _('Log in to make a prediction') }}
                           </a>
                         </div>
                       {% endif %}
                     {% elif pred %}
                       <div class="mt-1 small text-muted">
-                        Your pick: <strong>{{ pred.home_score }} – {{ pred.away_score }}</strong>
+                        {{ _('Your pick:') }} <strong>{{ pred.home_score }} – {{ pred.away_score }}</strong>
                         {% if pred.points_awarded is not none %}
                           &mdash; <strong class="text-dark">{{ pred.points_awarded }} pts</strong>
                         {% endif %}
