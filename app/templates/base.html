@@ -88,9 +88,13 @@
         {% endif %}
         <li class="nav-item ms-2 d-flex align-items-center">
           {% if session.get('lang', 'en') == 'pl' %}
-            <a class="nav-link py-0 small" href="{{ url_for('main.set_lang', lang='en') }}">EN</a>
+            <a class="nav-link py-0 lh-1" href="{{ url_for('main.set_lang', lang='en') }}" title="Switch to English">
+              <img src="https://flagcdn.com/24x18/gb.png" width="24" height="18" alt="EN">
+            </a>
           {% else %}
-            <a class="nav-link py-0 small" href="{{ url_for('main.set_lang', lang='pl') }}">PL</a>
+            <a class="nav-link py-0 lh-1" href="{{ url_for('main.set_lang', lang='pl') }}" title="Przełącz na polski">
+              <img src="https://flagcdn.com/24x18/pl.png" width="24" height="18" alt="PL">
+            </a>
           {% endif %}
         </li>
       </ul>
