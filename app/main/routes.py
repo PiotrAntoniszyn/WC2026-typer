@@ -23,7 +23,7 @@ def index():
         .filter(~Match.home_team.has(Team.country_code == "TBD"))
         .filter(~Match.away_team.has(Team.country_code == "TBD"))
         .order_by(Match.match_datetime)
-        .limit(5)
+        .limit(3)
         .all()
     )
     top_users = User.query.order_by(User.total_points.desc()).limit(5).all()
