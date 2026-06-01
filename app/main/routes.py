@@ -27,7 +27,16 @@ def index():
         .all()
     )
     top_users = User.query.order_by(User.total_points.desc()).limit(5).all()
-    return render_template("main/index.html", upcoming=upcoming, top_users=top_users)
+    user_predictions = {}
+    if current_user.is_authenticated:
+        preds = (
+            Prediction.query
+            .filter_by(user_id=current_user.id)
+            .filter(Prediction.match_id.isnot(None))
+            .all()
+        )
+        user_predictions = {p.match_id: p for p in preds}
+    return render_template("main/index.html", upcoming=upcoming, top_users=top_users, user_predictions=user_predictions)
 
 
 @main_bp.route("/matches")
