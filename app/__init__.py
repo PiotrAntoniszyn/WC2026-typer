@@ -18,7 +18,10 @@ babel = Babel()
 
 
 def get_locale() -> str:
-    return session.get("lang", "en")
+    from flask import has_request_context
+    if has_request_context():
+        return session.get("lang", "en")
+    return "en"
 
 
 def create_app(config=None) -> Flask:
@@ -52,6 +55,9 @@ def create_app(config=None) -> Flask:
 
     app.config["BABEL_DEFAULT_LOCALE"] = cfg.babel_default_locale
     app.config["BABEL_SUPPORTED_LOCALES"] = cfg.babel_supported_locales
+
+    from werkzeug.middleware.proxy_fix import ProxyFix
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1, x_proto=1, x_prefix=1)
 
     db.init_app(app)
     migrate.init_app(app, db)

@@ -152,7 +152,13 @@ def rules():
 def set_lang(lang: str):
     if lang in ("en", "pl"):
         session["lang"] = lang
-    return redirect(request.referrer or url_for("main.index"))
+    referrer = request.referrer
+    if referrer:
+        from urllib.parse import urlparse
+        ref = urlparse(referrer)
+        if ref.scheme in ("http", "https") and ref.netloc == request.host:
+            return redirect(referrer)
+    return redirect(url_for("main.index"))
 
 
 @main_bp.route("/profile")
