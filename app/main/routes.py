@@ -134,6 +134,11 @@ def leaderboard():
     return render_template("main/leaderboard.html", users=users, stats=stats)
 
 
+@main_bp.route("/rules")
+def rules():
+    return render_template("main/rules.html")
+
+
 @main_bp.route("/profile")
 @login_required
 def profile():
