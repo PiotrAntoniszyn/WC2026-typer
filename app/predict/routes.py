@@ -1,6 +1,6 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
-from flask import abort, flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, url_for
 from flask_babel import _
 from flask_login import current_user, login_required
 
@@ -21,8 +21,8 @@ def save_prediction(match_id: int):
     # Enforce lock window even if is_locked flag hasn't been set by scheduler yet
     settings = db.session.get(AppSettings, 1)
     lock_minutes = settings.lock_minutes_before if settings else 60
-    lock_cutoff = match.match_datetime.replace(tzinfo=timezone.utc) - timedelta(minutes=lock_minutes)
-    if datetime.now(timezone.utc) >= lock_cutoff:
+    lock_cutoff = match.match_datetime.replace(tzinfo=UTC) - timedelta(minutes=lock_minutes)
+    if datetime.now(UTC) >= lock_cutoff:
         match.is_locked = True
         db.session.commit()
         flash(_("The prediction window for this match has closed."), "warning")
@@ -56,10 +56,12 @@ def save_prediction(match_id: int):
     return redirect(url_for("main.matches"))
 
 
+CHAMPION_DEADLINE = datetime(2026, 6, 12, 12, 0, tzinfo=UTC)
+
+
 @predict_bp.route("/champion", methods=["GET", "POST"])
 def champion():
-    first_match = Match.query.order_by(Match.match_datetime).first()
-    window_open = first_match is None or datetime.now(timezone.utc) < first_match.match_datetime.replace(tzinfo=timezone.utc)
+    window_open = datetime.now(UTC) < CHAMPION_DEADLINE
 
     teams = Team.query.filter(Team.country_code != "TBD").order_by(Team.name).all()
     form = ChampionForm()
@@ -106,5 +108,5 @@ def champion():
         window_open=window_open,
         existing=existing,
         teams=teams,
-        first_match=first_match,
+        deadline=CHAMPION_DEADLINE,
     )

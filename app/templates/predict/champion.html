@@ -45,9 +45,9 @@
   {% endif %}
 {% endif %}
 
-{% if first_match and window_open and current_user.is_authenticated %}
+{% if window_open and current_user.is_authenticated %}
   <p class="mt-3 text-muted small">
-    {{ _('Window closes:') }} {{ first_match.match_datetime.strftime("%d %B %Y %H:%M") }} UTC
+    {{ _('Window closes:') }} {{ deadline.strftime("%d %B %Y %H:%M") }} UTC
   </p>
 {% endif %}
 {% endblock %}
