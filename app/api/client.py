@@ -131,12 +131,28 @@ def sync_results(app) -> int:
                 if away_team and match.away_team_id != away_team.id:
                     match.away_team_id = away_team.id
 
-            # Update result
-            full_time = api_m.get("score", {}).get("fullTime", {})
+            # Update result — use only the 90-minute score.
+            # For ET/PSO matches the API writes the final (post-ET) score into
+            # fullTime and stores ET-period goals separately in extraTime.
+            score_obj = api_m.get("score", {})
+            duration = score_obj.get("duration", "REGULAR")
+            full_time = score_obj.get("fullTime") or {}
             home_score = full_time.get("home")
             away_score = full_time.get("away")
             if home_score is None or away_score is None:
                 continue
+
+            if duration in ("EXTRA_TIME", "PENALTY_SHOOTOUT"):
+                extra_time = score_obj.get("extraTime") or {}
+                et_home = extra_time.get("home")
+                et_away = extra_time.get("away")
+                if None not in (et_home, et_away):
+                    home_score = home_score - et_home
+                    away_score = away_score - et_away
+                    logger.info(
+                        "Match %s went to %s — storing 90-min score %s-%s",
+                        ext_id, duration, home_score, away_score,
+                    )
 
             if match.home_score != home_score or match.away_score != away_score:
                 match.home_score = home_score
