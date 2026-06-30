@@ -68,10 +68,20 @@ def matches():
 
     sort_mode = request.args.get("sort", "phase")
     phase_order = list(PhaseEnum)
+
+    # Default to the most advanced phase that has matches so the current
+    # knockout round is visible without needing to scroll past group stage.
+    active_phase = phase_order[0]
+    for phase in reversed(phase_order):
+        if by_phase.get(phase):
+            active_phase = phase
+            break
+
     return render_template(
         "main/matches.html",
         by_phase=by_phase,
         phase_order=phase_order,
+        active_phase=active_phase,
         user_predictions=user_predictions,
         all_matches=all_matches,
         sort_mode=sort_mode,

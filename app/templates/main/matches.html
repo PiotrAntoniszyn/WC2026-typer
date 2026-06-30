@@ -91,11 +91,9 @@
 {% else %}
 
 <div class="accordion" id="matchesAccordion">
-  {% set first_phase = namespace(found=false) %}
   {% for phase in phase_order %}
     {% if by_phase[phase] %}
-      {% set is_first = not first_phase.found %}
-      {% set first_phase.found = true %}
+      {% set is_active = phase == active_phase %}
 
       {% set ns = namespace(count=0) %}
       {% for matches in by_phase[phase].values() %}
@@ -104,18 +102,17 @@
 
       <div class="accordion-item">
         <h2 class="accordion-header">
-          <button class="accordion-button {{ '' if is_first else 'collapsed' }}"
+          <button class="accordion-button {{ '' if is_active else 'collapsed' }}"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#phase-{{ phase.value }}"
-                  aria-expanded="{{ 'true' if is_first else 'false' }}">
+                  aria-expanded="{{ 'true' if is_active else 'false' }}">
             {{ phase.label }}
             <span class="badge bg-secondary ms-2">{{ ns.count }}</span>
           </button>
         </h2>
         <div id="phase-{{ phase.value }}"
-             class="accordion-collapse collapse {{ 'show' if is_first else '' }}"
-             data-bs-parent="#matchesAccordion">
+             class="accordion-collapse collapse {{ 'show' if is_active else '' }}">
           <div class="accordion-body p-2">
             {% for group_letter, matches in by_phase[phase].items()|sort %}
               {% if group_letter %}
@@ -200,4 +197,23 @@
 </div>
 
 {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Fallback: if Bootstrap JS is absent or blocked, wire accordion manually.
+(function () {
+  if (window.bootstrap) return;
+  document.querySelectorAll('#matchesAccordion .accordion-button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = document.querySelector(this.getAttribute('data-bs-target'));
+      if (!target) return;
+      var open = target.classList.contains('show');
+      target.classList.toggle('show', !open);
+      this.classList.toggle('collapsed', open);
+      this.setAttribute('aria-expanded', String(!open));
+    });
+  });
+}());
+</script>
 {% endblock %}
